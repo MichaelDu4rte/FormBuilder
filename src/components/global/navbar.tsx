@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import Icons from "../global/icons";
+import Icons from "./icons";
 import { buttonVariants } from "../ui/button";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 const Navbar = () => {
-  const user = false;
-
+  const { isSignedIn } = useUser;
   return (
     <header className="px-4 h-16 sticky top-0 inset-x-0 w-full bg-background/80 backdrop-blur-lg border-b border-border z-50 shadow-md">
       <div className="flex items-center justify-between h-full mx-auto max-w-screen-xl">
@@ -13,7 +13,7 @@ const Navbar = () => {
           <Link href={"/"} className="flex items-center gap-2">
             <Icons.logo className="w-8 h-8" aria-label="Logo AIRESUME" />
             <span className="text-lg font-semibold">
-              <span className="text-blue-500">AI</span>RESUME
+              <span className="text-blue-500">IA</span>RESUME
             </span>
           </Link>
         </div>
@@ -22,7 +22,7 @@ const Navbar = () => {
           <ul className="flex items-center gap-8">
             <li className="transition-transform duration-300 hover:scale-105">
               <Link
-                href={"/"}
+                href={"#home"}
                 className="text-sm font-medium hover:text-foreground/80"
               >
                 Home
@@ -30,7 +30,7 @@ const Navbar = () => {
             </li>
             <li className="transition-transform duration-300 hover:scale-105">
               <Link
-                href={"/"}
+                href={"#depoimentos"}
                 className="text-sm font-medium hover:text-foreground/80"
               >
                 Depoimentos
@@ -38,7 +38,7 @@ const Navbar = () => {
             </li>
             <li className="transition-transform duration-300 hover:scale-105">
               <Link
-                href={"/"}
+                href={"#planos"}
                 className="text-sm font-medium hover:text-foreground/80"
               >
                 Preço
@@ -46,7 +46,7 @@ const Navbar = () => {
             </li>
             <li className="transition-transform duration-300 hover:scale-105">
               <Link
-                href={"/"}
+                href={"#contato"}
                 className="text-sm font-medium hover:text-foreground/80"
               >
                 Contato
@@ -56,8 +56,16 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-4">
-          {user ? (
-            <UserButton />
+          {isSignedIn ? (
+            <>
+              <Link
+                href="/dashboard"
+                className={`${buttonVariants({ size: "sm" })} hidden md:flex`}
+              >
+                Dashboard
+              </Link>
+              <UserButton />
+            </>
           ) : (
             <>
               <Link

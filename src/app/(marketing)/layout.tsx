@@ -1,4 +1,5 @@
 import { Navbar } from "@/components";
+import Footer from "@/components/home/footer/footer";
 import React from "react";
 
 interface Props {
@@ -10,6 +11,7 @@ const MarketingLayout = ({ children }: Props) => {
     <div className="flex flex-col items-center w-full">
       <Navbar></Navbar>
       {children}
+      <Footer></Footer>
     </div>
   );
 };
