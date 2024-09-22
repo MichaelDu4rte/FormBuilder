@@ -47,7 +47,7 @@ const HomePage = () => {
                   height={24}
                   className="w-4 h-4"
                 />
-                Crie seu currículo perfeito em minutos
+                Comece a construir seu formulário perfeito em minutos
                 <ChevronRight className="w-4 h-4" />
               </span>
             </button>
@@ -55,12 +55,12 @@ const HomePage = () => {
             {/* Main Content */}
             <div className="flex flex-col items-center mt-8 max-w-3xl w-11/12 md:w-full">
               <h1 className="text-4xl md:text-6xl lg:textxl md:!leading-snug font-semibold text-center bg-clip-text bg-gradient-to-b from-gray-50 to-gray-50 text-transparent">
-                Construa seu currículo com inteligência artificial
+                Crie Formulários Personalizados
               </h1>
               <p className="text-base md:text-lg text-foreground/80 mt-6 text-center">
-                Crie currículos profissionais de forma rápida e fácil com IA.
-                Deixe que nossa tecnologia cuide dos detalhes enquanto você foca
-                na sua carreira.
+                Construa formulários interativos e totalmente personalizáveis
+                com nossa ferramenta de arrastar e soltar. Simples e eficaz,
+                permitindo que você foque no que realmente importa.
               </p>
               <div className="hidden md:flex relative items-center justify-center mt-8 md:mt-12 w-full">
                 <Link
@@ -68,7 +68,7 @@ const HomePage = () => {
                   className="flex items-center justify-center w-max rounded-full border-t border-foreground/30 bg-white/20 backdrop-blur-lg px-2 py-1 md:py-2 gap-2 md:gap-8 shadow-3xl shadow-background/40 cursor-pointer select-none"
                 >
                   <p className="text-foreground text-sm text-center md:text-base font-medium pl-4 pr-4 lg:pr-0">
-                    ✨ {"  "} Ganhe a atenção dos recrutadores
+                    ✨ {"  "} Torne a coleta de dados mais fácil e rápida
                   </p>
                   <Button
                     size="sm"
@@ -101,18 +101,17 @@ const HomePage = () => {
         </Container>
       </Wrapper>
 
-      {/* Steps Build CV */}
+      {/* Steps to Build a Form */}
       <Wrapper className="flex flex-col items-center justify-center py-12 relative">
         <Container>
           <div className="max-w-md mx-auto text-start md:text-center">
-            <SectionBadge title="Deixe os Recrutadores Sem Palavras!"></SectionBadge>
+            <SectionBadge title="Facilite sua Coleta de Dados!"></SectionBadge>
             <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-              A Revolução da IA que Conquista Recrutadores!
+              A Nova Era dos Formulários Inteligentes!
             </h2>
             <p className="text-muted-foreground mt-6">
-              Crie currículos irresistíveis com a ajuda da nossa IA. Siga nosso
-              processo simples para garantir que seu currículo se destaque e
-              chame a atenção dos recrutadores.
+              Construa formulários que impressionam e facilitam a coleta de
+              dados com nossa solução simples e intuitiva.
             </p>
           </div>
         </Container>
@@ -140,7 +139,7 @@ const HomePage = () => {
         </Container>
       </Wrapper>
 
-      {/* pricing */}
+      {/* Pricing */}
       <Wrapper className="flex flex-col items-center justify-center py-12 relative">
         <div
           className="hidden md:block absolute top-0 -right-1/3 w-72 h-72 bg-blue-500 rounded-full blur-[10rem] -z-10"
@@ -150,12 +149,11 @@ const HomePage = () => {
           <div className="max-w-md mx-auto text-start md:text-center">
             <SectionBadge title="Planos" />
             <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-              Escolha o plano perfeito para você!
+              Escolha o plano ideal para suas necessidades!
             </h2>
             <p className="text-muted-foreground mt-6">
-              Descubra o plano perfeito que combina com suas necessidades e
-              aproveite o máximo do nosso serviço para criar currículos que
-              impressionam.
+              Descubra qual plano se adapta melhor ao seu projeto e aproveite ao
+              máximo nossas funcionalidades.
             </p>
           </div>
         </Container>
@@ -208,7 +206,7 @@ const HomePage = () => {
         </Container>
       </Wrapper>
 
-      {/* testimonials */}
+      {/* Testimonials */}
       <Wrapper className="flex flex-col items-center justify-center py-12 relative">
         <div
           id="depoimentos"
@@ -222,9 +220,9 @@ const HomePage = () => {
               O que nossos usuários estão dizendo
             </h2>
             <p className="text-muted-foreground mt-6">
-              Estamos ajudando pessoas a conquistar oportunidades incríveis.
-              Veja como nossos usuários transformaram suas carreiras com
-              currículos feitos sob medida para impressionar os recrutadores.
+              Nossos usuários estão aproveitando a facilidade de criar
+              formulários. Veja como essa ferramenta transformou suas
+              experiências.
             </p>
           </div>
         </Container>
@@ -294,7 +292,7 @@ const HomePage = () => {
         </Container>
       </Wrapper>
 
-      {/* newsletter */}
+      {/* Newsletter */}
       <Wrapper className="flex flex-col items-center justify-center py-12 relative">
         <Container>
           <LampContainer>
@@ -303,15 +301,15 @@ const HomePage = () => {
               id="contato"
             >
               <h2 className="text-4xl lg:text-5xl xl:text-6xl lg:!leading-snug font-semibold mt-8">
-                Transforme Seu Currículo <br /> em Minutos
+                Crie Seu Formulário <br /> em Minutos
               </h2>
               <p className="text-muted-foreground mt-6 max-w-md mx-auto">
-                Aproveite nossas ferramentas poderosas de IA para criar um
-                currículo de destaque e ser notado pelos melhores recrutadores.
+                Utilize nossas ferramentas poderosas para criar formulários que
+                se destacam e coletam dados com eficiência.
               </p>
               <Button variant="white" className="mt-6" asChild>
                 <Link href="/sign-in">
-                  Comece a criar seu currículo com IA
+                  Comece a criar seu formulário com nossa ferramenta
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -324,10 +322,11 @@ const HomePage = () => {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between w-full px-4 md:px-8 rounded-lg lg:rounded-2xl border border-border/80 py-4 md:py-8">
               <div className="flex flex-col items-start gap-4 w-full">
                 <h4 className="text-xl md:text-2xl font-semibold">
-                  Inscreve-se na nossa newsletter
+                  Inscreva-se na nossa newsletter
                 </h4>
                 <p className="text-base text-muted-foreground">
-                  Se mantenha atualizado sobre novidades e promoções!
+                  Fique por dentro das novidades e dicas para maximizar sua
+                  experiência!
                 </p>
               </div>
               <div className="flex flex-col items-start gap-2 md:min-w-80 mt-5 md:mt-0 w-full md:w-max">
@@ -338,7 +337,7 @@ const HomePage = () => {
                   <Input
                     required
                     type="email"
-                    placeholder="IaResume@gmail.com"
+                    placeholder="FormBuilder@gmail.com"
                     className="focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-primary duration-300 w-full"
                   />
                   <Button

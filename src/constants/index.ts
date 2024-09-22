@@ -4,19 +4,20 @@ export const perks = [
     {
         icon: Icons.auth,
         title: "Análise Personalizada",
-        info: "Nossa IA avalia suas habilidades e experiências para criar um perfil personalizado e impactante.",
+        info: "Criamos formulários personalizados com base nas suas necessidades e preferências, garantindo um impacto real.",
     },
     {
         icon: Icons.customize,
         title: "Geração de Conteúdo",
-        info: "Receba sugestões e frases otimizadas para tornar seu currículo atraente e alinhado com o que os recrutadores procuram.",
+        info: "Receba sugestões e textos otimizados para tornar seus formulários atraentes e alinhados com as melhores práticas.",
     },
     {
         icon: Icons.launch,
         title: "Ajustes Inteligentes",
-        info: "Ajuste seu currículo com recomendações baseadas em dados para garantir que ele se destaque em qualquer processo seletivo.",
+        info: "Ajuste seus formulários com recomendações baseadas em dados para garantir que eles se destaquem em qualquer contexto.",
     },
 ];
+
 
 export const features = [
     {
@@ -54,13 +55,13 @@ export const features = [
 export const pricingCards = [
     {
         title: "Gratuito",
-        description: "Experimente nossa IA com acesso básico.",
+        description: "Experimente nossa ferramenta com acesso básico.",
         price: "Free",
         duration: "",
-        highlight: "Key features",
+        highlight: "Recursos principais",
         buttonText: "Avaliação gratuita",
         features: [
-            "Currículos limitados",
+            "Formulários limitados",
             "Modelos básicos",
             "Ferramentas essenciais",
             "Suporte básico"
@@ -69,18 +70,18 @@ export const pricingCards = [
     },
     {
         title: "Plano Profissional",
-        description: "Desbloqueie todo o potencial da nossa IA.",
+        description: "Desbloqueie todo o potencial da nossa plataforma.",
         price: "R$20",
-        duration: "month",
-        highlight: "Key features",
+        duration: "mês",
+        highlight: "Recursos principais",
         buttonText: "Comece Agora e Destaque-se",
         features: [
-            "Currículos ilimitados",
+            "Formulários ilimitados",
             "Modelos avançados",
             "Ferramentas profissionais",
             "Análise detalhada",
             "Suporte prioritário",
-            "Garantia de sucesso no processo de seleção"
+            "Garantia de sucesso em coletas de dados"
         ],
         priceId: "",
     },
@@ -90,61 +91,61 @@ export const reviews = [
     {
         name: "Ana",
         username: "@ana_dev",
-        body: "Transformei meu currículo em algo realmente impactante com a ajuda da IA. A ferramenta é intuitiva e eficiente!",
+        body: "Transformei meu processo de coleta de dados com uma ferramenta intuitiva e eficiente. Foi uma experiência incrível!",
     },
     {
         name: "Carlos",
         username: "@carlos_hr",
-        body: "A criação de currículos nunca foi tão fácil. O IARESUME me ajudou a destacar minhas habilidades de forma profissional.",
+        body: "Criar formulários nunca foi tão fácil. A plataforma me ajudou a destacar as informações de forma profissional.",
     },
     {
         name: "Mariana",
         username: "@mariana_design",
-        body: "Adorei a experiência! O design do currículo ficou excelente e a inteligência artificial garantiu que tudo estivesse perfeito.",
+        body: "Adorei a experiência! O design dos meus formulários ficou excelente e a interface é super amigável.",
     },
     {
         name: "Pedro",
         username: "@pedro_tech",
-        body: "Com o IARESUME, consegui criar um currículo que realmente chama a atenção dos recrutadores. Altamente recomendável!",
+        body: "Consegui criar formulários que realmente chamam a atenção. Altamente recomendável para quem precisa de agilidade!",
     },
     {
         name: "Beatriz",
         username: "@beatriz_edu",
-        body: "Incrível como a ferramenta de IA consegue transformar um currículo comum em algo excepcional. Fácil de usar e muito eficiente!",
+        body: "Incrível como essa ferramenta transforma um formulário comum em algo excepcional. Muito fácil de usar e eficaz!",
     },
     {
         name: "Lucas",
         username: "@lucas_mkt",
-        body: "O IARESUME superou minhas expectativas! O processo foi rápido e o resultado final é simplesmente impressionante.",
+        body: "Superou minhas expectativas! O processo foi rápido e o resultado final é simplesmente impressionante.",
     },
     {
         name: "Laura",
         username: "@laura_eco",
-        body: "Nunca imaginei que criar um currículo poderia ser tão simples e eficaz. A IA fez um trabalho incrível em destacar o que há de melhor em mim.",
+        body: "Nunca imaginei que criar formulários poderia ser tão simples e eficaz. A plataforma destacou o que há de melhor em mim.",
     },
     {
         name: "Ricardo",
         username: "@ricardo_it",
-        body: "A ferramenta é extremamente útil e fácil de usar. O meu currículo ficou muito mais profissional e atraente.",
+        body: "Extremamente útil e fácil de usar. Meus formulários ficaram muito mais profissionais e atraentes.",
     },
     {
         name: "Fernanda",
         username: "@fernanda_sales",
-        body: "O IARESUME fez toda a diferença na minha busca por emprego. A inteligência artificial realmente ajudou a aprimorar meu currículo.",
+        body: "Essa ferramenta fez toda a diferença na minha coleta de dados. A inteligência artificial realmente aprimorou minha abordagem.",
     },
     {
         name: "Gabriel",
         username: "@gabriel_eng",
-        body: "Excelente ferramenta! O processo de criação do currículo foi rápido e o resultado final me deixou muito satisfeito.",
+        body: "Excelente ferramenta! O processo de criação de formulários foi rápido e o resultado final me deixou muito satisfeito.",
     },
     {
         name: "Tatiane",
         username: "@tatiane_arts",
-        body: "O IARESUME tem um design incrível e a IA ajudou a criar um currículo que realmente se destaca. Adorei a experiência!",
+        body: "O design é incrível e ajudou a criar formulários que realmente se destacam. Adorei a experiência!",
     },
     {
         name: "Juliana",
         username: "@juliana_hr",
-        body: "Recomendo fortemente o IARESUME! A criação de currículos é muito mais eficiente e eficaz com a ajuda da inteligência artificial.",
+        body: "Recomendo fortemente! Criar formulários é muito mais eficiente e eficaz com a ajuda dessa plataforma.",
     },
 ];

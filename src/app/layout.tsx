@@ -12,9 +12,9 @@ import {
 const font = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "IaResume | CV Inteligente",
+  title: "FormBuilder | Crie Formulários",
   description:
-    "Crie currículos impressionantes com a ajuda da inteligência artificial. O IaResume transforma seu histórico profissional em um currículo atraente e personalizado, aumentando suas chances de conquistar o emprego dos seus sonhos. Simples, rápido e eficaz.",
+    "FormBuilder permite que você crie formulários impressionantes e personalizados de forma simples e rápida. Transforme suas ideias em formulários eficazes e atraentes, facilitando a coleta de dados e feedbacks valiosos.",
 };
 
 export default function RootLayout({

@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="text-center mb-8">
         <Icons.logo className="w-10 h-10 mx-auto" />
         <p className="text-muted-foreground mt-4 text-sm">
-          Oportunidades começam com um currículo inteligente.{" "}
+          Crie, personalize e compartilhe: tudo em um só lugar!{" "}
         </p>
         <span className="mt-4 text-neutral-200 text-sm flex justify-center items-center">
           <Link
@@ -28,7 +28,7 @@ const Footer = () => {
       {/* Footer Bottom */}
       <div className="border-t border-border/40 pt-4 w-full text-center mt-8">
         <p className="text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} IaResume. Todos os direitos
+          &copy; {new Date().getFullYear()} FormBuilder. Todos os direitos
           reservados.
         </p>
       </div>

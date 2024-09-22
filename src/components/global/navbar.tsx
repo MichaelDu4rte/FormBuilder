@@ -15,7 +15,7 @@ const Navbar = () => {
           <Link href={"/"} className="flex items-center gap-2">
             <Icons.logo className="w-8 h-8" aria-label="Logo AIRESUME" />
             <span className="text-lg font-semibold">
-              <span className="text-blue-500">IA</span>RESUME
+              Form<span className="text-blue-500">Builder</span>
             </span>
           </Link>
         </div>
