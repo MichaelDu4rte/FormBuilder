@@ -8,6 +8,8 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { dark, neobrutalism, shadesOfPurple } from "@clerk/themes";
+import { ptBR } from "@clerk/localizations";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -23,7 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: [dark],
+      }}
+      localization={ptBR}
+    >
       <html lang="pt-br" suppressHydrationWarning>
         <body
           className={cn(
