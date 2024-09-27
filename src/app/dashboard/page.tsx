@@ -1,18 +1,11 @@
-"use client";
-
 import React from "react";
-import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
 import { Navbar } from "@/components";
 import CreateFormBtn from "@/components/dashboard/CreateFormBtn";
-import { Button } from "@/components/ui/button";
+import { GetForms } from "../../../actions/form";
+
+import FormCard from "@/components/dashboard/formCard";
 
 const Dashboard = () => {
-  const { isSignedIn } = useAuth();
-
-  if (!isSignedIn) {
-    return <RedirectToSignIn />;
-  }
-
   return (
     <>
       <div className="flex flex-col items-center w-full">
@@ -34,17 +27,34 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <CreateFormBtn />
 
-            <div className="border border-dashed rounded-lg p-6 text-center flex items-center justify-center text-muted-foreground">
-              <p>Você ainda não criou nenhum formulário...</p>
-            </div>
-            <div className="border border-dashed rounded-lg p-6 text-center flex items-center justify-center text-muted-foreground">
-              <p>Crie um novo para começar!</p>
-            </div>
+            {/* Renderização dos cards */}
+            <FormCards />
           </div>
         </section>
       </section>
     </>
   );
 };
+
+async function FormCards() {
+  const forms = await GetForms();
+
+  return (
+    <>
+      {forms.length > 0 ? (
+        forms.map((form) => <FormCard key={form.id} form={form} />)
+      ) : (
+        <>
+          <span className="text-center text-muted-foreground">
+            Nenhum formulário disponível.
+          </span>
+          <div className="border border-dashed rounded-lg p-6 text-center flex items-center justify-center text-muted-foreground">
+            <p>Crie um novo formulário para começar!</p>
+          </div>
+        </>
+      )}
+    </>
+  );
+}
 
 export default Dashboard;

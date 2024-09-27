@@ -32,8 +32,11 @@ import { Button } from "../ui/button";
 import { toast } from "@/hooks/use-toast";
 import { formSchema, formSchemaType } from "../../../schemas/form";
 import { CreateForm } from "../../../actions/form";
+import { useRouter } from "next/navigation";
 
 function CreateFormBtn() {
+  const router = useRouter();
+
   const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,9 +50,10 @@ function CreateFormBtn() {
       const formId = await CreateForm(values);
       toast({
         title: "Formulário criado",
-        description: `O formulário foi criado com sucesso! ID: ${formId}`,
+        description: `O formulário foi criado com sucesso!`,
       });
       form.reset();
+      router.push(`/builder/${formId}`);
     } catch (error) {
       toast({
         title: "Erro",
