@@ -11,6 +11,7 @@ import {
 import { dark, neobrutalism, shadesOfPurple } from "@clerk/themes";
 import { ptBR } from "@clerk/localizations";
 import { Toaster } from "@/components/ui/toaster";
+import DesignerContextProvider from "@/components/context/DesignerContext";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -39,8 +40,10 @@ export default function RootLayout({
             font.className
           )}
         >
-          {children}
-          <Toaster />
+          <DesignerContextProvider>
+            {children}
+            <Toaster />
+          </DesignerContextProvider>
         </body>
       </html>
     </ClerkProvider>

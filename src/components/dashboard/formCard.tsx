@@ -62,7 +62,7 @@ function FormCard({ form }: { form: Form }) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end p-2">
-        <Link href={`/forms/${form.id}`}>
+        <Link href={`/builder/${form.id}`}>
           <Button variant="secondary" className="flex items-center gap-2">
             {form.published ? "Visualizar" : "Editar"}
             {form.published ? (
