@@ -56,7 +56,7 @@ export const TextFieldFormElements: FormElement = {
   },
 
   designerComponent: DesignerComponent,
-  formComponent: () => <div>formComponent </div>,
+  formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 };
 
@@ -210,6 +210,28 @@ function PropertiesComponent({
         />
       </form>
     </Form>
+  );
+}
+
+function FormComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementsInstance;
+}) {
+  const element = elementInstance as CustomInstance;
+  const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  return (
+    <div className="flex flex-col gap-1.5 w-full">
+      <Label className="text-sm font-medium text-gray-300 flex items-center">
+        {label}
+        {required && <span className="ml-1 text-red-500">*</span>}
+      </Label>
+      <Input
+        placeholder={placeHolder}
+        className="bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out"
+      />
+      {helperText && <p className="text-xs text-gray-400 mt-1">{helperText}</p>}
+    </div>
   );
 }
 
