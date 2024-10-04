@@ -15,13 +15,14 @@ function SaveFormBtn({ id }: { id: number }) {
       const JsonElements = JSON.stringify(elements);
       await UpdateFormContent(id, JsonElements);
       toast({
-        title: "Success",
-        description: "Seu formulario foi salvo!",
+        title: "Conteúdo Atualizado com Sucesso!",
+        description: "Seu formulário foi salvo e está pronto para uso.",
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Algo deu errado, tente novamente!",
+        title: "Erro ao Salvar",
+        description:
+          "Ocorreu um problema ao tentar salvar seu formulário. Verifique sua conexão e tente novamente.",
         variant: "destructive",
       });
     }
