@@ -4,14 +4,16 @@ import { MdTextFields } from "react-icons/md";
 import {
   ElementsType,
   FormElement,
+  FormElements,
   FormElementsInstance,
+  submitFunction,
 } from "../builder/FormElements";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useDesigner from "../hooks/useDesigner";
 
 import {
@@ -24,6 +26,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 
 const type: ElementsType = "TextField";
 
@@ -58,6 +61,18 @@ export const TextFieldFormElements: FormElement = {
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
+  validate: (
+    formElement: FormElementsInstance,
+    currentValue: string
+  ): boolean => {
+    const element = formElement as CustomInstance;
+
+    if (element.extraAttibutes.required) {
+      return currentValue.length > 0;
+    }
+
+    return true;
+  },
 };
 
 type CustomInstance = FormElementsInstance & {
@@ -215,22 +230,59 @@ function PropertiesComponent({
 
 function FormComponent({
   elementInstance,
+  submitValue,
+  isInvalid,
+  defaultValue,
 }: {
   elementInstance: FormElementsInstance;
+  submitValue?: submitFunction;
+  isInvalid?: boolean;
+  defaultValue?: string;
 }) {
   const element = elementInstance as CustomInstance;
+  const [value, setValue] = useState(defaultValue || "");
   const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setError(isInvalid === true);
+  }, [isInvalid]);
+
   return (
     <div className="flex flex-col gap-1.5 w-full">
-      <Label className="text-sm font-medium text-gray-300 flex items-center">
+      <Label
+        className={cn(
+          "text-sm font-medium text-gray-300 flex items-center",
+          error && "text-red-500"
+        )}
+      >
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
       <Input
         placeholder={placeHolder}
-        className="bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out"
+        className={cn(
+          "bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out",
+          error && "border-red-500"
+        )}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={(e) => {
+          if (!submitValue) return;
+
+          const valid = TextFieldFormElements.validate(element, e.target.value);
+          setError(!valid);
+          if (!valid) return;
+          submitValue(element.id, e.target.value);
+        }}
+        value={value}
       />
-      {helperText && <p className="text-xs text-gray-400 mt-1">{helperText}</p>}
+      {helperText && (
+        <p
+          className={cn("text-xs text-gray-400 mt-1", error && "text-red-500")}
+        >
+          {helperText}
+        </p>
+      )}
     </div>
   );
 }

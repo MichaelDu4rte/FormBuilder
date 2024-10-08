@@ -12,6 +12,7 @@ import { dark, neobrutalism, shadesOfPurple } from "@clerk/themes";
 import { ptBR } from "@clerk/localizations";
 import { Toaster } from "@/components/ui/toaster";
 import DesignerContextProvider from "@/components/context/DesignerContext";
+import NextTopLoader from "nextjs-toploader";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
             font.className
           )}
         >
+          <NextTopLoader />
           <DesignerContextProvider>
             {children}
             <Toaster />
