@@ -123,18 +123,18 @@ function Designer() {
   });
 
   return (
-    <div className="flex w-full h-screen">
+    <div className="flex w-full h-full">
       <DesignerSidebar />
       <div
         ref={droppable.setNodeRef}
-        className="ml-[350px]  p-6 w-full h-full overflow-hidden "
+        className="ml-[350px] p-6 w-full h-full overflow-hidden"
         onClick={() => {
           if (selectedElement) setSelectedElement(null);
         }}
       >
         <div
           className={cn(
-            "bg-[hsl(var(--background))] w-full h-full m-auto rounded-2xl shadow-xl p-6 flex flex-col flex-grow items-center justify-start transition-all duration-300",
+            "bg-[hsl(var(--background))] w-full h-full m-auto rounded-2xl shadow-xl p-6 flex flex-col flex-grow items-center justify-start transition-all duration-300 overflow-auto",
             droppable.isOver && "ring-4 ring-[hsl(var(--ring))]"
           )}
         >
@@ -149,7 +149,7 @@ function Designer() {
             </div>
           )}
           {elements.length > 0 && (
-            <div className="flex flex-col w-full gap-2 p-4">
+            <div className="flex flex-col w-full gap-2 p-4 overflow-auto">
               {elements.map((element) => (
                 <DesignerElementWrapper key={element.id} element={element} />
               ))}

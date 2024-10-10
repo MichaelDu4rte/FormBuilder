@@ -17,15 +17,15 @@ function PreviewDialogBtn() {
         </Button>
       </DialogTrigger>
       <DialogContent className="fixed flex border-muted items-center justify-center p-4 bg-opacity-50 ">
-        <div className="w-[90vw] bg-background rounded-2xl  overflow-hidden">
+        <div className="w-[95vw] max-w-[1200px] bg-background rounded-2xl overflow-hidden">
           <div className="px-6 py-4 border-b border-muted">
             <p className="text-2xl font-bold ">Preview</p>
             <p className="text-sm text-muted-foreground mt-1">
               Visualize como seu formulário se apresentará!
             </p>
           </div>
-          <div className="flex flex-col flex-grow p-6">
-            <div className="flex flex-col gap-4 bg-accent rounded-xl p-6 overflow-y-auto">
+          <div className="flex flex-col flex-grow pt-5 mim-w-screen">
+            <div className="flex flex-col gap-4 bg-accent rounded-xl p-6 ">
               {elements.map((element) => {
                 const FormComponent = FormElements[element.type].formComponent;
 
