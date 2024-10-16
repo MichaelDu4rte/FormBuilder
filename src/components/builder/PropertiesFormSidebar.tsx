@@ -14,7 +14,7 @@ function PropertiesFormSidebar() {
     FormElements[selectedElement?.type].propertiesComponent;
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col pb-20">
       <div className="flex justify-between items-center">
         <p className="text-sm text-foreground/70">Propriedades do elemento</p>
         <Button
@@ -28,7 +28,7 @@ function PropertiesFormSidebar() {
           <AiOutlineClose className="text-lg text-red-400 hover:text-red-500" />
         </Button>
       </div>
-      <Separator className="mb-4" />
+      <Separator className="mb-5" />
       <PropertiesForm elementInstance={selectedElement} />
     </div>
   );

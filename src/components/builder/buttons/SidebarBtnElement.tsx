@@ -26,7 +26,7 @@ function SidebarBtnElement({ formElement }: { formElement: FormElement }) {
       {...draggable.attributes}
     >
       <Icon className="h-8 w-8 text-[hsl(var(--primary))] cursor-grab" />
-      <p className="text-xs">{label}</p>
+      <p className="text-[11px]">{label}</p>
     </Button>
   );
 }

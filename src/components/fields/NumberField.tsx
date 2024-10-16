@@ -27,14 +27,15 @@ import {
 } from "../ui/form";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { Bs123 } from "react-icons/bs";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "NumberField";
 
 const extraAttibutes = {
-  label: "Campo de Pergunta",
+  label: "Campo Numérico",
   helperText: "Texto de ajuda ou observação adicional",
   required: false,
-  placeHolder: "Placeholder",
+  placeHolder: "0",
 };
 
 const propertiesSchemas = z.object({
@@ -44,7 +45,7 @@ const propertiesSchemas = z.object({
   placeHolder: z.string().max(50),
 });
 
-export const TextFieldFormElements: FormElement = {
+export const NumberFieldFormElements: FormElement = {
   type,
 
   construct: (id: string) => ({
@@ -54,8 +55,8 @@ export const TextFieldFormElements: FormElement = {
   }),
 
   designerBtnComponent: {
-    icon: MdTextFields,
-    label: "Campo de Pergunta",
+    icon: Bs123,
+    label: "Campo Numérico",
   },
 
   designerComponent: DesignerComponent,
@@ -260,6 +261,7 @@ function FormComponent({
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
       <Input
+        type="number"
         placeholder={placeHolder}
         className={cn(
           "bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out",
@@ -269,7 +271,10 @@ function FormComponent({
         onBlur={(e) => {
           if (!submitValue) return;
 
-          const valid = TextFieldFormElements.validate(element, e.target.value);
+          const valid = NumberFieldFormElements.validate(
+            element,
+            e.target.value
+          );
           setError(!valid);
           if (!valid) return;
           submitValue(element.id, e.target.value);
@@ -301,6 +306,7 @@ function DesignerComponent({
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
       <Input
+        type="number"
         readOnly
         disabled
         placeholder={placeHolder}

@@ -29,7 +29,7 @@ import { Textarea } from "../ui/textarea";
 const type: ElementsType = "ParagraphField";
 
 const extraAttibutes = {
-  text: "Texto aqui",
+  text: "Digite seu texto aqui",
 };
 
 const propertiesSchemas = z.object({

@@ -27,14 +27,18 @@ import {
 } from "../ui/form";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { BsTextareaResize } from "react-icons/bs";
+import { Textarea } from "../ui/textarea";
+import { Slider } from "../ui/slider";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "TextAreaField";
 
 const extraAttibutes = {
-  label: "Campo de Pergunta",
+  label: "Campo de Texto",
   helperText: "Texto de ajuda ou observação adicional",
   required: false,
   placeHolder: "Placeholder",
+  rows: 3,
 };
 
 const propertiesSchemas = z.object({
@@ -42,9 +46,10 @@ const propertiesSchemas = z.object({
   helperText: z.string().max(200),
   required: z.boolean().default(false),
   placeHolder: z.string().max(50),
+  rows: z.number().min(1).max(10),
 });
 
-export const TextFieldFormElements: FormElement = {
+export const TextAreaFieldFormElements: FormElement = {
   type,
 
   construct: (id: string) => ({
@@ -54,8 +59,8 @@ export const TextFieldFormElements: FormElement = {
   }),
 
   designerBtnComponent: {
-    icon: MdTextFields,
-    label: "Campo de Pergunta",
+    icon: BsTextareaResize,
+    label: "Campo de texto",
   },
 
   designerComponent: DesignerComponent,
@@ -97,6 +102,7 @@ function PropertiesComponent({
       helperText: element.extraAttibutes.helperText,
       required: element.extraAttibutes.required,
       placeHolder: element.extraAttibutes.placeHolder,
+      rows: element.extraAttibutes.rows,
     },
   });
 
@@ -105,7 +111,7 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { label, helperText, placeHolder, required } = values;
+    const { label, helperText, placeHolder, required, rows } = values;
     updateElement(element.id, {
       ...element,
       extraAttibutes: {
@@ -113,6 +119,7 @@ function PropertiesComponent({
         helperText,
         placeHolder,
         required,
+        rows,
       },
     });
   }
@@ -201,6 +208,30 @@ function PropertiesComponent({
 
         <FormField
           control={form.control}
+          name="rows"
+          render={({ field }) => (
+            <FormItem className="bg-gray-800 p-3 rounded-md border border-gray-700 shadow-sm">
+              <FormLabel className="text-sm text-gray-200 font-medium">
+                Tamanho {form.watch("rows")}
+              </FormLabel>
+              <FormControl>
+                <Slider
+                  defaultValue={[field.value]}
+                  min={1}
+                  max={10}
+                  step={1}
+                  onValueChange={(value) => {
+                    field.onChange(value[0]);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="required"
           render={({ field }) => (
             <FormItem className="flex items-center justify-between bg-gray-800 p-3 rounded-md border border-gray-700 shadow-sm">
@@ -241,7 +272,8 @@ function FormComponent({
 }) {
   const element = elementInstance as CustomInstance;
   const [value, setValue] = useState(defaultValue || "");
-  const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  const { label, required, placeHolder, helperText, rows } =
+    element.extraAttibutes;
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -249,7 +281,7 @@ function FormComponent({
   }, [isInvalid]);
 
   return (
-    <div className="flex flex-col gap-1.5 w-full">
+    <div className="flex flex-col gap-1.5 w-full overflow-auto">
       <Label
         className={cn(
           "text-sm font-medium text-gray-300 flex items-center",
@@ -259,7 +291,8 @@ function FormComponent({
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Input
+      <Textarea
+        rows={rows}
         placeholder={placeHolder}
         className={cn(
           "bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out",
@@ -269,7 +302,10 @@ function FormComponent({
         onBlur={(e) => {
           if (!submitValue) return;
 
-          const valid = TextFieldFormElements.validate(element, e.target.value);
+          const valid = TextAreaFieldFormElements.validate(
+            element,
+            e.target.value
+          );
           setError(!valid);
           if (!valid) return;
           submitValue(element.id, e.target.value);
@@ -293,14 +329,15 @@ function DesignerComponent({
   elementInstance: FormElementsInstance;
 }) {
   const element = elementInstance as CustomInstance;
-  const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  const { label, required, placeHolder, helperText, rows } =
+    element.extraAttibutes;
   return (
     <div className="flex flex-col gap-1.5 w-full">
       <Label className="text-sm font-medium text-gray-300 flex items-center">
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Input
+      <Textarea
         readOnly
         disabled
         placeholder={placeHolder}

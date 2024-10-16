@@ -10,6 +10,7 @@ import {
 } from "../builder/FormElements";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { Calendar } from "../ui/calendar";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,14 +28,22 @@ import {
 } from "../ui/form";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import { Button } from "../ui/button";
+import { CalendarIcon } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
+import { format } from "date-fns";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "DateField";
 
 const extraAttibutes = {
-  label: "Campo de Pergunta",
-  helperText: "Texto de ajuda ou observação adicional",
+  label: "Campo de data",
+  helperText: "Escolha uma data",
   required: false,
-  placeHolder: "Placeholder",
 };
 
 const propertiesSchemas = z.object({
@@ -44,7 +53,7 @@ const propertiesSchemas = z.object({
   placeHolder: z.string().max(50),
 });
 
-export const TextFieldFormElements: FormElement = {
+export const DateFieldFormElements: FormElement = {
   type,
 
   construct: (id: string) => ({
@@ -54,8 +63,8 @@ export const TextFieldFormElements: FormElement = {
   }),
 
   designerBtnComponent: {
-    icon: MdTextFields,
-    label: "Campo de Pergunta",
+    icon: BsFillCalendarDateFill,
+    label: "Campo de data",
   },
 
   designerComponent: DesignerComponent,
@@ -96,7 +105,6 @@ function PropertiesComponent({
       label: element.extraAttibutes.label,
       helperText: element.extraAttibutes.helperText,
       required: element.extraAttibutes.required,
-      placeHolder: element.extraAttibutes.placeHolder,
     },
   });
 
@@ -105,13 +113,12 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { label, helperText, placeHolder, required } = values;
+    const { label, helperText, required } = values;
     updateElement(element.id, {
       ...element,
       extraAttibutes: {
         label,
         helperText,
-        placeHolder,
         required,
       },
     });
@@ -143,31 +150,6 @@ function PropertiesComponent({
               </FormControl>
               <FormDescription className="text-xs text-gray-400">
                 O título será exibido acima do campo.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="placeHolder"
-          render={({ field }) => (
-            <FormItem className="bg-gray-800 p-3 rounded-md border border-gray-700 shadow-sm">
-              <FormLabel className="text-sm text-gray-200 font-medium">
-                Placeholder
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  className="bg-gray-700 text-gray-200 border border-gray-600 rounded p-1 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition duration-150"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription className="text-xs text-gray-400">
-                Texto que será exibido como dica dentro do campo.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -240,8 +222,10 @@ function FormComponent({
   defaultValue?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const [value, setValue] = useState(defaultValue || "");
-  const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  const [date, setDate] = useState<Date | undefined>(
+    defaultValue ? new Date(defaultValue) : undefined
+  );
+  const { label, required, helperText } = element.extraAttibutes;
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -259,23 +243,37 @@ function FormComponent({
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Input
-        placeholder={placeHolder}
-        className={cn(
-          "bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out",
-          error && "border-red-500"
-        )}
-        onChange={(e) => setValue(e.target.value)}
-        onBlur={(e) => {
-          if (!submitValue) return;
-
-          const valid = TextFieldFormElements.validate(element, e.target.value);
-          setError(!valid);
-          if (!valid) return;
-          submitValue(element.id, e.target.value);
-        }}
-        value={value}
-      />
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-full justify-start text-left font-normal",
+              !date && "text-muted-foreground",
+              error && "border-red-500"
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : <span>Selecione uma data</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={(date) => {
+              setDate(date);
+              if (!submitValue) return;
+              const value = date?.toUTCString() || "";
+              const valid = DateFieldFormElements.validate(element, value);
+              setError(!valid);
+              submitValue(element.id, value);
+            }}
+            initialFocus
+            className="rounded-md border"
+          />
+        </PopoverContent>
+      </Popover>
       {helperText && (
         <p
           className={cn("text-xs text-gray-400 mt-1", error && "text-red-500")}
@@ -300,12 +298,13 @@ function DesignerComponent({
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Input
-        readOnly
-        disabled
-        placeholder={placeHolder}
-        className="bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out"
-      />
+      <Button
+        variant={"outline"}
+        className="w-full justify-start text-left font-normal"
+      >
+        <CalendarIcon className="mr-2 h-4 w-4" />
+        <span>Selecione uma data</span>
+      </Button>
       {helperText && <p className="text-xs text-gray-400 mt-1">{helperText}</p>}
     </div>
   );

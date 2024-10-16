@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import useDesigner from "../hooks/useDesigner";
+import { RxDropdownMenu } from "react-icons/rx";
 
 import {
   Form,
@@ -27,14 +28,25 @@ import {
 } from "../ui/form";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { SelectItem } from "@radix-ui/react-select";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
+import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "SelectField";
 
 const extraAttibutes = {
-  label: "Campo de Pergunta",
+  label: "Campo de Seleção",
   helperText: "Texto de ajuda ou observação adicional",
   required: false,
   placeHolder: "Placeholder",
+  options: [],
 };
 
 const propertiesSchemas = z.object({
@@ -42,9 +54,10 @@ const propertiesSchemas = z.object({
   helperText: z.string().max(200),
   required: z.boolean().default(false),
   placeHolder: z.string().max(50),
+  options: z.array(z.string()).default([]),
 });
 
-export const TextFieldFormElements: FormElement = {
+export const SelectFieldFormElements: FormElement = {
   type,
 
   construct: (id: string) => ({
@@ -54,8 +67,8 @@ export const TextFieldFormElements: FormElement = {
   }),
 
   designerBtnComponent: {
-    icon: MdTextFields,
-    label: "Campo de Pergunta",
+    icon: RxDropdownMenu,
+    label: "Campo de Seleção",
   },
 
   designerComponent: DesignerComponent,
@@ -97,6 +110,7 @@ function PropertiesComponent({
       helperText: element.extraAttibutes.helperText,
       required: element.extraAttibutes.required,
       placeHolder: element.extraAttibutes.placeHolder,
+      options: element.extraAttibutes.options,
     },
   });
 
@@ -105,7 +119,7 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { label, helperText, placeHolder, required } = values;
+    const { label, helperText, placeHolder, required, options } = values;
     updateElement(element.id, {
       ...element,
       extraAttibutes: {
@@ -113,6 +127,7 @@ function PropertiesComponent({
         helperText,
         placeHolder,
         required,
+        options,
       },
     });
   }
@@ -198,6 +213,66 @@ function PropertiesComponent({
             </FormItem>
           )}
         />
+        <Separator />
+        <FormField
+          control={form.control}
+          name="options"
+          render={({ field }) => (
+            <FormItem className="bg-gray-800 p-3 rounded-md border border-gray-700 shadow-sm">
+              <div className="flex justify-between items-center">
+                <FormLabel className="text-sm text-gray-200 font-medium">
+                  Opções
+                </FormLabel>
+                <Button
+                  variant={"outline"}
+                  className="gap-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    form.setValue("options", field.value.concat("Nova opção"));
+                  }}
+                >
+                  <AiOutlinePlus />
+                  Adicionar
+                </Button>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {form.watch("options").map((option, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between gap-1"
+                  >
+                    <Input
+                      placeholder=""
+                      value={option}
+                      onChange={(e) => {
+                        field.value[index] = e.target.value;
+                        field.onChange(field.value);
+                      }}
+                    />
+                    <Button
+                      variant={"ghost"}
+                      size={"icon"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const newOptions = [...field.value];
+                        newOptions.splice(index, 1);
+                        field.onChange(newOptions);
+                      }}
+                    >
+                      <AiOutlineClose />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+
+              <FormDescription className="text-xs text-gray-400">
+                Clique no botão "adicionar" para adicionar novas opções.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -241,7 +316,8 @@ function FormComponent({
 }) {
   const element = elementInstance as CustomInstance;
   const [value, setValue] = useState(defaultValue || "");
-  const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  const { label, required, placeHolder, helperText, options } =
+    element.extraAttibutes;
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -259,23 +335,26 @@ function FormComponent({
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Input
-        placeholder={placeHolder}
-        className={cn(
-          "bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out",
-          error && "border-red-500"
-        )}
-        onChange={(e) => setValue(e.target.value)}
-        onBlur={(e) => {
+      <Select
+        onValueChange={(value) => {
+          setValue(value);
           if (!submitValue) return;
-
-          const valid = TextFieldFormElements.validate(element, e.target.value);
+          const valid = SelectFieldFormElements.validate(element, value);
           setError(!valid);
-          if (!valid) return;
-          submitValue(element.id, e.target.value);
+          submitValue(element.id, value);
         }}
-        value={value}
-      />
+      >
+        <SelectTrigger className={cn("w-full", error && "border-red-500")}>
+          <SelectValue placeholder={placeHolder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       {helperText && (
         <p
           className={cn("text-xs text-gray-400 mt-1", error && "text-red-500")}
@@ -300,12 +379,12 @@ function DesignerComponent({
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Input
-        readOnly
-        disabled
-        placeholder={placeHolder}
-        className="bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out"
-      />
+
+      <Select>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder={placeHolder} />
+        </SelectTrigger>
+      </Select>
       {helperText && <p className="text-xs text-gray-400 mt-1">{helperText}</p>}
     </div>
   );

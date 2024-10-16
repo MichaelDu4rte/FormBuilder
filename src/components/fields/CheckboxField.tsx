@@ -27,24 +27,22 @@ import {
 } from "../ui/form";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { IoCheckbox } from "react-icons/io5";
+import { Checkbox } from "../ui/checkbox";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "CheckboxField";
 
 const extraAttibutes = {
-  label: "Campo de Pergunta",
-  helperText: "Texto de ajuda ou observação adicional",
+  label: "Campo de checkbox",
   required: false,
-  placeHolder: "Placeholder",
 };
 
 const propertiesSchemas = z.object({
   label: z.string().min(2).max(50),
-  helperText: z.string().max(200),
   required: z.boolean().default(false),
-  placeHolder: z.string().max(50),
 });
 
-export const TextFieldFormElements: FormElement = {
+export const CheckboxFieldFormElements: FormElement = {
   type,
 
   construct: (id: string) => ({
@@ -54,8 +52,8 @@ export const TextFieldFormElements: FormElement = {
   }),
 
   designerBtnComponent: {
-    icon: MdTextFields,
-    label: "Campo de Pergunta",
+    icon: IoCheckbox,
+    label: "Campo de checkbox",
   },
 
   designerComponent: DesignerComponent,
@@ -68,7 +66,7 @@ export const TextFieldFormElements: FormElement = {
     const element = formElement as CustomInstance;
 
     if (element.extraAttibutes.required) {
-      return currentValue.length > 0;
+      return currentValue === "true";
     }
 
     return true;
@@ -94,9 +92,7 @@ function PropertiesComponent({
     mode: "onBlur",
     defaultValues: {
       label: element.extraAttibutes.label,
-      helperText: element.extraAttibutes.helperText,
       required: element.extraAttibutes.required,
-      placeHolder: element.extraAttibutes.placeHolder,
     },
   });
 
@@ -105,13 +101,11 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { label, helperText, placeHolder, required } = values;
+    const { label, required } = values;
     updateElement(element.id, {
       ...element,
       extraAttibutes: {
         label,
-        helperText,
-        placeHolder,
         required,
       },
     });
@@ -143,56 +137,6 @@ function PropertiesComponent({
               </FormControl>
               <FormDescription className="text-xs text-gray-400">
                 O título será exibido acima do campo.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="placeHolder"
-          render={({ field }) => (
-            <FormItem className="bg-gray-800 p-3 rounded-md border border-gray-700 shadow-sm">
-              <FormLabel className="text-sm text-gray-200 font-medium">
-                Placeholder
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  className="bg-gray-700 text-gray-200 border border-gray-600 rounded p-1 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition duration-150"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription className="text-xs text-gray-400">
-                Texto que será exibido como dica dentro do campo.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="helperText"
-          render={({ field }) => (
-            <FormItem className="bg-gray-800 p-3 rounded-md border border-gray-700 shadow-sm">
-              <FormLabel className="text-sm text-gray-200 font-medium">
-                Texto de Ajuda
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  className="bg-gray-700 text-gray-200 border border-gray-600 rounded p-1 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition duration-150"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription className="text-xs text-gray-400">
-                O texto de ajuda será exibido abaixo do campo.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -240,7 +184,9 @@ function FormComponent({
   defaultValue?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const [value, setValue] = useState(defaultValue || "");
+  const [value, setValue] = useState<boolean>(
+    defaultValue === "true" ? true : false
+  );
   const { label, required, placeHolder, helperText } = element.extraAttibutes;
   const [error, setError] = useState(false);
 
@@ -248,65 +194,65 @@ function FormComponent({
     setError(isInvalid === true);
   }, [isInvalid]);
 
+  const id = `checkbox-${element.id}`;
   return (
-    <div className="flex flex-col gap-1.5 w-full">
-      <Label
-        className={cn(
-          "text-sm font-medium text-gray-300 flex items-center",
-          error && "text-red-500"
-        )}
-      >
-        {label}
-        {required && <span className="ml-1 text-red-500">*</span>}
-      </Label>
-      <Input
-        placeholder={placeHolder}
-        className={cn(
-          "bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out",
-          error && "border-red-500"
-        )}
-        onChange={(e) => setValue(e.target.value)}
-        onBlur={(e) => {
+    <div className="flex items-center space-x-3">
+      <Checkbox
+        id={id}
+        checked={value}
+        className={cn(error && "border-red-500")}
+        onCheckedChange={(checked) => {
+          let value = false;
+          if (checked === true) value = true;
+          setValue(value);
           if (!submitValue) return;
 
-          const valid = TextFieldFormElements.validate(element, e.target.value);
+          const stringValue = value ? "true" : "false";
+          const valid = CheckboxFieldFormElements.validate(
+            element,
+            stringValue
+          );
+
           setError(!valid);
-          if (!valid) return;
-          submitValue(element.id, e.target.value);
+          submitValue(element.id, stringValue);
         }}
-        value={value}
       />
-      {helperText && (
-        <p
-          className={cn("text-xs text-gray-400 mt-1", error && "text-red-500")}
+      <div className="grid grid-cols-1 gap-2 leading-tight">
+        <Label
+          htmlFor={id}
+          className={cn(
+            "text-sm font-medium text-gray-300 flex items-center",
+            error && "border-red-500"
+          )}
         >
-          {helperText}
-        </p>
-      )}
+          {label}
+          {required && <span className="ml-1 text-red-500">*</span>}
+        </Label>
+      </div>
     </div>
   );
 }
-
 function DesignerComponent({
   elementInstance,
 }: {
   elementInstance: FormElementsInstance;
 }) {
   const element = elementInstance as CustomInstance;
-  const { label, required, placeHolder, helperText } = element.extraAttibutes;
+  const { label, required, helperText } = element.extraAttibutes;
+  const id = `checkbox-${element.id}`;
+
   return (
-    <div className="flex flex-col gap-1.5 w-full">
-      <Label className="text-sm font-medium text-gray-300 flex items-center">
-        {label}
-        {required && <span className="ml-1 text-red-500">*</span>}
-      </Label>
-      <Input
-        readOnly
-        disabled
-        placeholder={placeHolder}
-        className="bg-gray-800/50 text-gray-300 border border-gray-600 rounded-md p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150 ease-in-out"
-      />
-      {helperText && <p className="text-xs text-gray-400 mt-1">{helperText}</p>}
+    <div className="flex items-center space-x-3">
+      <Checkbox id={id} />
+      <div className="grid grid-cols-1 gap-2 leading-tight">
+        <Label
+          htmlFor={id}
+          className="text-sm font-medium text-gray-300 flex items-center"
+        >
+          {label}
+          {required && <span className="ml-1 text-red-500">*</span>}
+        </Label>
+      </div>
     </div>
   );
 }

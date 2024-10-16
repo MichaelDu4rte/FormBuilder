@@ -216,7 +216,7 @@ function DesignerElementWrapper({
         e.stopPropagation();
         setSelectedElement(element);
       }}
-      className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
+      className="relative h-[150px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
     >
       <div
         ref={topHalf.setNodeRef}
@@ -228,7 +228,7 @@ function DesignerElementWrapper({
       ></div>
       {mouseIsOver && (
         <>
-          <div className="absolute right-0 h-full">
+          <div className="absolute right-0 h-full ">
             <Button
               className="flex justify-center  h-full border rounded-md rounded-l-none bg-red-500"
               variant={"destructive"}
@@ -255,7 +255,7 @@ function DesignerElementWrapper({
       )}
       <div
         className={cn(
-          "flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
+          "flex w-full h-[150px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
           mouseIsOver && "opacity-30"
         )}
       >
