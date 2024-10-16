@@ -41,7 +41,7 @@ export default function RootLayout({
             font.className
           )}
         >
-          <NextTopLoader />
+          <NextTopLoader showSpinner={false} />
           <DesignerContextProvider>
             {children}
             <Toaster />

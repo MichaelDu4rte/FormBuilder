@@ -335,21 +335,13 @@ function FormComponent({
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
-      <Select
-        onValueChange={(value) => {
-          setValue(value);
-          if (!submitValue) return;
-          const valid = SelectFieldFormElements.validate(element, value);
-          setError(!valid);
-          submitValue(element.id, value);
-        }}
-      >
-        <SelectTrigger className={cn("w-full", error && "border-red-500")}>
-          <SelectValue placeholder={placeHolder} />
+      <Select onValueChange={(val) => setValue(val)}>
+        <SelectTrigger className="w-full text-gray-300">
+          <span>{value || placeHolder}</span>
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="text-gray-400">
           {options.map((option) => (
-            <SelectItem key={option} value={option}>
+            <SelectItem key={option} value={option} className="text-gray-300">
               {option}
             </SelectItem>
           ))}
@@ -374,15 +366,15 @@ function DesignerComponent({
   const element = elementInstance as CustomInstance;
   const { label, required, placeHolder, helperText } = element.extraAttibutes;
   return (
-    <div className="flex flex-col gap-1.5 w-full">
+    <div className="flex flex-col gap-1.5 w-full text-gray-300">
       <Label className="text-sm font-medium text-gray-300 flex items-center">
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </Label>
 
       <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={placeHolder} />
+        <SelectTrigger className="w-full text-gray-300">
+          <SelectValue placeholder={placeHolder} className="text-gray-300" />
         </SelectTrigger>
       </Select>
       {helperText && <p className="text-xs text-gray-400 mt-1">{helperText}</p>}

@@ -1,10 +1,8 @@
 import React, { ReactNode } from "react";
 import { GetFormsById, GetFormWithSubmissions } from "../../../../actions/form";
-import FormBuilder from "@/components/builder/FormBuilder";
 import VisitBtn from "@/components/dashboard/VisitBtn";
 import FormLinkShare from "@/components/dashboard/FormLinkShare";
 import Link from "next/link";
-import PreviewDialogBtn from "@/components/builder/buttons/PreviewDialogBtn";
 import { Icons } from "@/components";
 import { buttonVariants } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
@@ -20,7 +18,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDistance } from "date-fns";
+import { format, formatDistance } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ptBR } from "date-fns/locale";
 
 async function FormDetailsPage({
   params,
@@ -113,6 +114,11 @@ async function SubmissionsTable({ id }: { id: number }) {
   formElements.forEach((element) => {
     switch (element.type) {
       case "TextField":
+      case "NumberField":
+      case "TextAreaField":
+      case "DateField":
+      case "SelectField":
+      case "CheckboxField":
         columns.push({
           id: element.id,
           label: element.extraAttibutes?.label,
@@ -162,16 +168,16 @@ async function SubmissionsTable({ id }: { id: number }) {
               className="transition-all duration-200 hover:bg-[hsl(var(--popover))]"
             >
               {columns.map((column) => (
-                <TableCell
+                <RowCell
                   key={column.id}
-                  className="text-[hsl(var(--foreground))]"
-                >
-                  {row[column.id]}
-                </TableCell>
+                  type={column.type}
+                  value={row[column.id]}
+                ></RowCell>
               ))}
               <TableCell className="text-right text-[hsl(var(--muted-foreground))]">
                 {formatDistance(row.submittedAt, new Date(), {
                   addSuffix: true,
+                  locale: ptBR,
                 })}
               </TableCell>
             </TableRow>
@@ -184,5 +190,18 @@ async function SubmissionsTable({ id }: { id: number }) {
 
 function RowCell({ type, value }: { type: ElementsType; value: string }) {
   let node: ReactNode = value;
+
+  switch (type) {
+    case "DateField":
+      if (!value) break;
+      const date = new Date(value);
+      node = <Badge variant={"outline"}>{format(date, "dd/MM/yyyy")}</Badge>;
+      break;
+    case "CheckboxField":
+      const checked = value === "true";
+      node = <Checkbox checked={checked} disabled />;
+      break;
+  }
+
   return <TableCell>{node}</TableCell>;
 }

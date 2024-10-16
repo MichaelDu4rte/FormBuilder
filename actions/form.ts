@@ -31,7 +31,7 @@ export async function getFormStats() {
     let submissionRate = 0;
 
     if (visits > 0) {
-        submissionRate = (submissionRate / visits) * 100;
+        submissionRate = (submissions / visits) * 100;
     }
 
     const bounceRate = 100 - submissionRate;

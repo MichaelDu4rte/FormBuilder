@@ -1,5 +1,6 @@
 import { CheckboxFieldFormElements } from "../fields/CheckboxField";
 import { DateFieldFormElements } from "../fields/DateField";
+import { ImageFieldFormElements } from "../fields/ImageField";
 import { NumberFieldFormElements } from "../fields/NumberField";
 import { ParagraphFieldFormElements } from "../fields/ParagraphField";
 import { SelectFieldFormElements } from "../fields/SelectField";
@@ -21,6 +22,7 @@ export type ElementsType =
   | "TextAreaField"
   | "DateField"
   | "SelectField"
+  | "ImageField"
   | "CheckboxField";
 
 export type submitFunction = (key: string, value: string) => void;
@@ -76,4 +78,5 @@ export const FormElements: FormElementsType = {
   DateField: DateFieldFormElements,
   SelectField: SelectFieldFormElements,
   CheckboxField: CheckboxFieldFormElements,
+  ImageField: ImageFieldFormElements,
 };

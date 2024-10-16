@@ -104,10 +104,10 @@ function FormSubmitComponent({
   }
 
   return (
-    <div className="flex justify-center w-full h-full items-center py-8 ">
+    <div className="flex justify-center w-full h-full items-center py-8  bg-[hsl(var(--accent))] ">
       <div
         key={renderKey}
-        className="max-w-[620px] w-full p-8 flex flex-col gap-6 bg-gray-800 text-white rounded-xl shadow-lg"
+        className="max-w-[620px] w-full p-8 flex flex-col gap-6  bg-[hsl(var(--background))] text-white rounded-xl shadow-lg"
       >
         <h2 className="text-2xl font-semibold mb-4">Preencha o Formulário</h2>
         {content.map((element) => {
@@ -115,7 +115,7 @@ function FormSubmitComponent({
           return (
             <div
               key={element.id}
-              className="bg-gray-700 p-4 rounded-lg shadow-sm border border-gray-600"
+              className="bg-[hsl(var(--muted))] p-4 rounded-lg shadow-md border border-[hsl(var(--border))] transition-transform duration-200 hover:shadow-lg"
             >
               <FormElement
                 elementInstance={element}

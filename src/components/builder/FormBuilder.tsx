@@ -171,7 +171,7 @@ function FormBuilder({ form }: { form: Form }) {
           </div>
         </header>
 
-        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto bg-[hsl(var(--accent))] min-h-screen bg-cover bg-center bg-[url(/wiggle.svg)]">
+        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto bg-[hsl(var(--accent))] min-h-screen bg-cover bg-center ">
           <Designer />
         </div>
       </main>

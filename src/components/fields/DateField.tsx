@@ -37,6 +37,7 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 const type: ElementsType = "DateField";
 
@@ -270,7 +271,8 @@ function FormComponent({
               submitValue(element.id, value);
             }}
             initialFocus
-            className="rounded-md border"
+            className="rounded-md"
+            locale={ptBR}
           />
         </PopoverContent>
       </Popover>
