@@ -1,12 +1,13 @@
 {
-  "name": "IAResume",
+  "name": "FormBuilder",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/localizations": "^3.0.4",
