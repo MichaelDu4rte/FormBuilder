@@ -69,9 +69,10 @@ async function FormCards() {
         forms.map((form) => <FormCard key={form.id} form={form} />)
       ) : (
         <>
-          <span className="text-center text-muted-foreground">
-            Nenhum formulário disponível.
-          </span>
+          <div className="border border-dashed rounded-lg p-6 text-center flex items-center justify-center text-muted-foreground">
+            <p>Nenhum formulário disponível.</p>
+          </div>
+
           <div className="border border-dashed rounded-lg p-6 text-center flex items-center justify-center text-muted-foreground">
             <p>Crie um novo formulário para começar!</p>
           </div>
