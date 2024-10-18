@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { LampContainer } from "@/components/ui/lamp";
 import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
-import { features, perks, pricingCards, reviews } from "@/constants";
+import { perks, pricingCards, reviews } from "@/constants";
 import { cn } from "@/lib/utils";
 import { ArrowRight, ChevronRight, UserIcon, Zap } from "lucide-react";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const HomePage = () => {
   const secondRow = reviews.slice(reviews.length / 2);
 
   return (
-    <section className="w-full relative flex flex-col items-center justify-center px-4 md:px-0 py-8">
+    <section className="w-full relative flex flex-col items-center justify-center px-4 md:px-0 py-8 overflow-x-hidden">
       {/* Main Hero */}
       <Wrapper>
         <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] -z-10 h-[150vh]" />
@@ -86,7 +86,7 @@ const HomePage = () => {
               <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div>
               <div className="-m-2 rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl">
                 <Image
-                  src="/assets/dashboard.svg"
+                  src="/assets/dashboard1.png"
                   alt="banner image"
                   width={1200}
                   height={1200}

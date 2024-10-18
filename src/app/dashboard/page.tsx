@@ -1,15 +1,39 @@
 import React from "react";
-import { Navbar } from "@/components";
+import { Icons, Navbar } from "@/components";
 import CreateFormBtn from "@/components/dashboard/CreateFormBtn";
 import { GetForms } from "../../../actions/form";
 
 import FormCard from "@/components/dashboard/formCard";
+import Link from "next/link";
+import PreviewDialogBtn from "@/components/builder/buttons/PreviewDialogBtn";
+import { UserButton } from "@clerk/nextjs";
+import { buttonVariants } from "@/components/ui/button";
 
 const Dashboard = () => {
   return (
     <>
       <div className="flex flex-col items-center w-full">
-        <Navbar />
+        <header className="px-4 h-16 sticky top-0 inset-x-0 w-full bg-background/80 backdrop-blur-lg border-b border-border z-50 shadow-md">
+          <div className="flex items-center justify-between h-full mx-auto max-w-screen-xl">
+            <div className="flex items-center">
+              <Link href={"/"} className="flex items-center gap-2">
+                <Icons.logo className="w-8 h-8" aria-label="Logo AIRESUME" />
+                <span className="text-lg font-semibold">
+                  Form<span className="text-blue-500">Builder</span>
+                </span>
+              </Link>
+            </div>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/dashboard"
+                className={`${buttonVariants({ size: "sm" })} hidden md:flex`}
+              >
+                Dashboard
+              </Link>
+              <UserButton />
+            </div>
+          </div>
+        </header>
       </div>
 
       <section className="w-full px-6 py-10">

@@ -11,8 +11,8 @@ class UserNotFoundError extends Error{}
 export async function getFormStats() {
     const user = await currentUser();
 
-    if(!user) { 
-        throw new UserNotFoundError;
+    if (!user) {
+        throw new UserNotFoundError();  
     }
 
     const stats = await prisma.form.aggregate({
@@ -23,7 +23,7 @@ export async function getFormStats() {
             visits: true,
             submissions: true
         }
-    })
+    });
 
     const visits = stats._sum.visits || 0;
     const submissions = stats._sum.submissions || 0;
@@ -37,8 +37,11 @@ export async function getFormStats() {
     const bounceRate = 100 - submissionRate;
 
     return {
-        visits, submissions, submissionRate, bounceRate
-    }
+        visits,
+        submissions,
+        submissionRate,
+        bounceRate
+    };
 }
 
 
@@ -87,6 +90,19 @@ export async function GetForms() {
         }
     })
 }
+
+export async function DeleteForm(id: number) {
+    const user = await currentUser();
+  
+    if (!user) throw new UserNotFoundError();
+  
+    return await prisma.form.delete({
+      where: {
+        id,
+        userId: user.id,
+      },
+    });
+  }
 
 export async function GetFormsById(id: number) {
     const user = await currentUser();

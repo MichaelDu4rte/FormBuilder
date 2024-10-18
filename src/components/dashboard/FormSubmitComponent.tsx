@@ -76,13 +76,13 @@ function FormSubmitComponent({
 
   if (submitted) {
     return (
-      <div className="flex justify-center items-center min-h-screen  p-6">
-        <div className="max-w-[650px] w-full p-12 bg-gradient-to-br from-[hsl(var(--popover))] to-[hsl(var(--card))] rounded-3xl shadow-xl border border-[hsl(var(--border))] transform transition-transform hover:scale-105 duration-300">
+      <div className="flex justify-center items-center min-h-screen p-6">
+        <div className="max-w-[650px] w-full p-8 sm:p-12 rounded-3xl shadow-xl border border-[hsl(var(--border))] transform transition-transform hover:scale-105 duration-300">
           <div className="text-center">
-            <h2 className="text-4xl font-bold mb-6 text-[hsl(var(--primary))]">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-[hsl(var(--primary))]">
               Formulário Enviado com Sucesso!
             </h2>
-            <p className="text-[hsl(var(--foreground))] text-lg mb-8">
+            <p className="text-[hsl(var(--foreground))] text-base sm:text-lg mb-8">
               Obrigado por preencher o formulário. Suas respostas foram enviadas
               e logo entraremos em contato com você.
             </p>
@@ -90,7 +90,7 @@ function FormSubmitComponent({
           <div className="mt-10 text-center text-sm text-[hsl(var(--muted-foreground))]">
             Este formulário foi criado com{" "}
             <a
-              href="https://www.formbuilder.com"
+              href="/"
               target="_blank"
               className="text-[hsl(var(--primary))] hover:underline"
             >
@@ -104,19 +104,18 @@ function FormSubmitComponent({
   }
 
   return (
-    <div className="flex justify-center w-full h-full items-center py-8  bg-[hsl(var(--accent))] ">
+    <div className="flex justify-center w-full h-full items-center py-8">
       <div
         key={renderKey}
-        className="max-w-[620px] w-full p-8 flex flex-col gap-6  bg-[hsl(var(--background))] text-white rounded-xl shadow-lg"
+        className="max-w-[600px] w-full p-8 flex flex-col gap-1 bg-background text-white shadow-xl border border-[hsl(var(--border))] rounded-lg"
       >
-        <h2 className="text-2xl font-semibold mb-4">Preencha o Formulário</h2>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-6">
+          Preencha o Formulário
+        </h2>
         {content.map((element) => {
           const FormElement = FormElements[element.type].formComponent;
           return (
-            <div
-              key={element.id}
-              className="bg-[hsl(var(--muted))] p-4 rounded-lg shadow-md border border-[hsl(var(--border))] transition-transform duration-200 hover:shadow-lg"
-            >
+            <div key={element.id} className="mb-4">
               <FormElement
                 elementInstance={element}
                 submitValue={submitValue}
@@ -127,7 +126,7 @@ function FormSubmitComponent({
           );
         })}
         <Button
-          className="mt-8 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md flex items-center justify-center transition-all duration-200"
+          className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-full shadow-md transition-all duration-200 flex items-center justify-center"
           onClick={() => {
             startTransition(submitForm);
             submitForm();

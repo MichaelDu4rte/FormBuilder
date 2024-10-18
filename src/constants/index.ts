@@ -18,45 +18,11 @@ export const perks = [
     },
 ];
 
-
-export const features = [
-    {
-        icon: Icons.bolt,
-        title: "Fast Setup",
-        info: "Get your website up and running in minutes with our intuitive AI-powered builder.",
-    },
-    {
-        icon: Icons.palette,
-        title: "Customizable Templates",
-        info: "Choose from a variety of stunning templates and customize them to suit your brand.",
-    },
-    {
-        icon: Icons.seo,
-        title: "SEO Optimized",
-        info: "Built-in SEO features ensure your website ranks well on search engines.",
-    },
-    {
-        icon: Icons.monitor,
-        title: "Responsive Design",
-        info: "Your website will look great on any device, from desktops to mobile phones.",
-    },
-    {
-        icon: Icons.shop,
-        title: "E-Commerce Ready",
-        info: "Start selling online with our e-commerce features and integrations.",
-    },
-    {
-        icon: Icons.server,
-        title: "Secure Hosting",
-        info: "Enjoy peace of mind with secure and reliable hosting for your website.",
-    },
-];
-
 export const pricingCards = [
     {
-        title: "Gratuito",
+        title: "Plano Gratuito",
         description: "Experimente nossa ferramenta com acesso básico.",
-        price: "Free",
+        price: "Gratuito",
         duration: "",
         highlight: "Recursos principais",
         buttonText: "Avaliação gratuita",
@@ -69,10 +35,10 @@ export const pricingCards = [
         priceId: "",
     },
     {
-        title: "Plano Profissional",
+        title: "Plano Profissional Anual",
         description: "Desbloqueie todo o potencial da nossa plataforma.",
         price: "R$20",
-        duration: "mês",
+        duration: "year",
         highlight: "Recursos principais",
         buttonText: "Comece Agora e Destaque-se",
         features: [

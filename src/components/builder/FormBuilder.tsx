@@ -12,24 +12,29 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import DragOverlayWrapper from "./DragOverlayWrapper";
-import Icons from "../global/icons";
 import Link from "next/link";
 import SaveFormBtn from "./buttons/SaveFormBtn";
 import PublishFormBtn from "./buttons/PublishFormBtn";
 import useDesigner from "../hooks/useDesigner";
 import { ImSpinner2 } from "react-icons/im";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { toast } from "@/hooks/use-toast";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoAnalytics } from "react-icons/io5";
-
 import Confetti from "react-confetti";
 import { motion } from "framer-motion";
+import Icons from "../global/icons";
+import { Toast } from "../ui/toast";
+import { Input } from "../ui/input";
 
 function FormBuilder({ form }: { form: Form }) {
   const { setElements } = useDesigner();
   const [isReady, setIsReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isFormSaved, setIsFormSaved] = useState(false);
+
+  const handleFormSaved = () => {
+    setIsFormSaved(true);
+  };
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -47,6 +52,19 @@ function FormBuilder({ form }: { form: Form }) {
   const sensors = useSensors(mouseSensor, touchSensor);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     if (isReady) return;
     const elements = JSON.parse(form.content);
     setElements(elements);
@@ -55,9 +73,39 @@ function FormBuilder({ form }: { form: Form }) {
   }, [form, setElements]);
 
   if (!isReady) {
-    <div className="flex flex-col items-center justify-center w-full h-full">
-      <ImSpinner2 className="animate-spin h-12 w-12" />
-    </div>;
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <ImSpinner2 className="animate-spin h-12 w-12" />
+      </div>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <div className="flex w-full min-h-screen flex-col justify-center items-center  text-white">
+        <div className="max-w-lg text-center p-8 border border-gray-700 rounded-lg shadow-lg">
+          <h1 className="text-6xl font-bold text-red-500 mb-4">Oops!</h1>
+          <h2 className="text-2xl mb-4">
+            Esta página não está disponível para dispositivos móveis.
+          </h2>
+          <p className="text-gray-400 mb-8">
+            Não se preocupe, estamos cientes do problema e trabalhando para
+            resolvê-lo. Se precisar de ajuda imediata, você pode
+            <a
+              href="mailto:suporte@seudominio.com"
+              className="underline text-blue-400 hover:text-blue-300"
+            >
+              {" "}
+              entrar em contato
+            </a>
+            .
+          </p>
+          <Button asChild className="bg-blue-600 hover:bg-blue-500 text-white">
+            <Link href="/">Voltar para a Página Inicial</Link>
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   const shareUrlForm = `${window.location.origin}/submit/${form.shareURL}`;
@@ -102,9 +150,8 @@ function FormBuilder({ form }: { form: Form }) {
                 className="w-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--primary), 0.85)] transition-all rounded-lg py-2 text-sm md:text-base"
                 onClick={() => {
                   navigator.clipboard.writeText(shareUrlForm);
-                  toast({
+                  Toast({
                     title: "Link copiado!",
-                    description: "Compartilhe seu formulário!",
                   });
                 }}
               >
@@ -118,11 +165,11 @@ function FormBuilder({ form }: { form: Form }) {
                 asChild
               >
                 <Link
-                  href={"/"}
+                  href={"/dashboard"}
                   className="flex items-center gap-2 text-[hsl(var(--primary))]"
                 >
                   <BsArrowLeft />
-                  Voltar para Home
+                  Voltar para Dashboard
                 </Link>
               </Button>
               <Button
@@ -163,8 +210,8 @@ function FormBuilder({ form }: { form: Form }) {
 
               {!form.published && (
                 <>
-                  <SaveFormBtn id={form.id} />
-                  <PublishFormBtn id={form.id} />
+                  <SaveFormBtn id={form.id} onFormSaved={handleFormSaved} />
+                  <PublishFormBtn id={form.id} disabled={!isFormSaved} />{" "}
                 </>
               )}
             </div>

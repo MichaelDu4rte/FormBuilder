@@ -6,7 +6,13 @@ import { UpdateFormContent } from "../../../../actions/form";
 import { toast } from "@/hooks/use-toast";
 import { FaSpinner } from "react-icons/fa";
 
-function SaveFormBtn({ id }: { id: number }) {
+function SaveFormBtn({
+  id,
+  onFormSaved,
+}: {
+  id: number;
+  onFormSaved: () => void;
+}) {
   const { elements } = useDesigner();
   const [loading, startTransition] = useTransition();
 
@@ -18,6 +24,7 @@ function SaveFormBtn({ id }: { id: number }) {
         title: "Conteúdo Atualizado com Sucesso!",
         description: "Seu formulário foi salvo e está pronto para uso.",
       });
+      onFormSaved();
     } catch (error) {
       toast({
         title: "Erro ao Salvar",

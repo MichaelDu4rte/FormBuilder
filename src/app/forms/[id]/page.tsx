@@ -22,6 +22,7 @@ import { format, formatDistance } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ptBR } from "date-fns/locale";
+import { Button } from "react-day-picker";
 
 async function FormDetailsPage({
   params,
@@ -141,49 +142,51 @@ async function SubmissionsTable({ id }: { id: number }) {
   });
 
   return (
-    <div className="p-8 bg-[hsl(var(--card))] rounded-2xl shadow-lg border border-[hsl(var(--border))]">
-      <h1 className="text-3xl font-bold mb-6 text-[hsl(var(--foreground))]">
+    <div className="p-6 bg-[hsl(var(--card))] rounded-2xl shadow-lg border border-[hsl(var(--border))]">
+      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-[hsl(var(--foreground))]">
         Respostas
       </h1>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {columns.map((column) => (
-              <TableHead
-                key={column.id}
-                className="uppercase text-[hsl(var(--muted-foreground))]"
-              >
-                {column.label}
-              </TableHead>
-            ))}
-            <TableHead className="text-right uppercase text-[hsl(var(--muted-foreground))]">
-              Enviado em
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow
-              key={index}
-              className="transition-all duration-200 hover:bg-[hsl(var(--popover))]"
-            >
+      <div className="overflow-x-auto">
+        <Table className="min-w-full">
+          <TableHeader>
+            <TableRow>
               {columns.map((column) => (
-                <RowCell
+                <TableHead
                   key={column.id}
-                  type={column.type}
-                  value={row[column.id]}
-                ></RowCell>
+                  className="uppercase text-[hsl(var(--muted-foreground))] text-xs md:text-sm"
+                >
+                  {column.label}
+                </TableHead>
               ))}
-              <TableCell className="text-right text-[hsl(var(--muted-foreground))]">
-                {formatDistance(row.submittedAt, new Date(), {
-                  addSuffix: true,
-                  locale: ptBR,
-                })}
-              </TableCell>
+              <TableHead className="text-right uppercase text-[hsl(var(--muted-foreground))] text-xs md:text-sm">
+                Enviado em
+              </TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow
+                key={index}
+                className="transition-all duration-200 hover:bg-[hsl(var(--popover))] text-white"
+              >
+                {columns.map((column) => (
+                  <RowCell
+                    key={column.id}
+                    type={column.type}
+                    value={row[column.id]}
+                  />
+                ))}
+                <TableCell className="text-right text-[hsl(var(--muted-foreground))] text-xs md:text-sm">
+                  {formatDistance(row.submittedAt, new Date(), {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

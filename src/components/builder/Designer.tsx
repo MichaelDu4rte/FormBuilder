@@ -127,7 +127,7 @@ function Designer() {
       <DesignerSidebar />
       <div
         ref={droppable.setNodeRef}
-        className="ml-[350px] p-6 w-full h-full overflow-hidden"
+        className="ml-[350px] p-5 w-full h-full overflow-hidden"
         onClick={() => {
           if (selectedElement) setSelectedElement(null);
         }}
