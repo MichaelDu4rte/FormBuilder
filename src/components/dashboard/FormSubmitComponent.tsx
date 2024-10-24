@@ -129,7 +129,6 @@ function FormSubmitComponent({
           className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-full shadow-md transition-all duration-200 flex items-center justify-center"
           onClick={() => {
             startTransition(submitForm);
-            submitForm();
           }}
           disabled={pending}
         >
